@@ -1,0 +1,276 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Paleta de colores actualizada - Azules modernos */
+    --background: 210 40% 98%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    /* Azul principal más vibrante */
+    --primary: 210 100% 35%;
+    --primary-foreground: 210 40% 98%;
+
+    /* Azul secundario más claro */
+    --secondary: 210 40% 94%;
+    --secondary-foreground: 210 100% 35%;
+
+    /* Tonos mutados más suaves */
+    --muted: 210 30% 92%;
+    --muted-foreground: 210 30% 40%;
+
+    /* Acento con tono azul cielo */
+    --accent: 200 100% 95%;
+    --accent-foreground: 200 100% 30%;
+
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 210 100% 35%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
+
+    --card: 222 47% 11%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 98%;
+
+    /* Azul principal más brillante para modo oscuro */
+    --primary: 210 100% 50%;
+    --primary-foreground: 222 47% 11%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 210 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-semibold tracking-tight;
+  }
+
+  h1 {
+    @apply text-3xl lg:text-4xl;
+  }
+
+  h2 {
+    @apply text-2xl lg:text-3xl;
+  }
+
+  h3 {
+    @apply text-xl lg:text-2xl;
+  }
+}
+
+/* Ajuste para el sidebar en dispositivos móviles */
+@media (max-width: 1024px) {
+  body {
+    padding-top: 4rem;
+  }
+}
+
+/* Estilos personalizados para mejorar la autenticidad */
+.dashboard-card {
+  @apply bg-card rounded-lg border border-border shadow-sm transition-all duration-200 hover:shadow-md;
+}
+
+.dashboard-card-header {
+  @apply flex flex-row items-center justify-between pb-2 space-y-0;
+}
+
+.dashboard-card-title {
+  @apply text-sm font-medium text-primary;
+}
+
+.dashboard-card-icon {
+  @apply h-5 w-5 text-primary/70;
+}
+
+.dashboard-card-content {
+  @apply pt-2;
+}
+
+.dashboard-card-value {
+  @apply text-2xl font-bold;
+}
+
+.dashboard-card-label {
+  @apply text-xs text-muted-foreground;
+}
+
+/* Estilos para tablas */
+.data-table {
+  @apply w-full border-collapse;
+}
+
+.data-table th {
+  @apply bg-secondary/50 text-primary font-medium text-sm px-4 py-3 text-left;
+}
+
+.data-table tr {
+  @apply border-b border-border transition-colors hover:bg-muted/30;
+}
+
+.data-table td {
+  @apply px-4 py-3 text-sm;
+}
+
+/* Estilos para formularios */
+.form-container {
+  @apply bg-card rounded-lg border border-border shadow-sm p-6;
+}
+
+.form-group {
+  @apply space-y-2 mb-6;
+}
+
+.form-label {
+  @apply text-sm font-medium text-foreground;
+}
+
+.form-input {
+  @apply w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+}
+
+/* Estilos para botones */
+.btn-primary {
+  @apply bg-primary text-primary-foreground hover:bg-primary/90 rounded-md px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+}
+
+.btn-secondary {
+  @apply bg-secondary text-secondary-foreground hover:bg-secondary/80 rounded-md px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+}
+
+.btn-outline {
+  @apply border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+}
+
+/* Animaciones y transiciones */
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mejoras para el sidebar */
+.sidebar {
+  @apply bg-card border-r border-border;
+}
+
+.sidebar-header {
+  @apply border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-background/60;
+}
+
+.sidebar-link {
+  @apply flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground;
+}
+
+.sidebar-link-active {
+  @apply bg-primary/10 text-primary;
+}
+
+.sidebar-section {
+  @apply px-3 py-2;
+}
+
+.sidebar-section-title {
+  @apply text-xs font-medium text-muted-foreground mb-2;
+}
+
+/* Estilos para badges */
+.badge {
+  @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2;
+}
+
+.badge-primary {
+  @apply bg-primary text-primary-foreground hover:bg-primary/80;
+}
+
+.badge-secondary {
+  @apply bg-secondary text-secondary-foreground hover:bg-secondary/80;
+}
+
+.badge-success {
+  @apply bg-green-100 text-green-800;
+}
+
+.badge-warning {
+  @apply bg-yellow-100 text-yellow-800;
+}
+
+/* Mejoras para inputs */
+input:focus,
+select:focus,
+textarea:focus {
+  @apply ring-2 ring-primary/20 outline-none;
+}
+
+/* Mejoras para scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-secondary/30;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary/20 rounded-full hover:bg-primary/30;
+}
+
