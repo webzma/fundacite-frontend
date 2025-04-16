@@ -106,13 +106,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return Promise.resolve(false);
       }
 
-      window.alert("Todo salió bien");
+      // Mostrar un mensaje de éxito
+      window.alert("Registro exitoso. Por favor, inicia sesión.");
+
+      // No redirigir automáticamente ni actualizar el estado global
+      return Promise.resolve(true);
     } catch (error) {
-      console.error("Error en la autenticación:", error);
+      console.error("Error en el registro:", error);
       return false;
     }
-
-    return Promise.resolve(true);
   };
 
   const logout = () => {
