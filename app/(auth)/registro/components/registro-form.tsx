@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/auth-context";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,10 +8,9 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle, UserPlus, Eye, EyeOff } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox";
+import { toast } from "@/components/ui/use-toast";
 
 export function RegistroForm() {
-  const router = useRouter();
   const { register } = useAuth();
   const [formData, setFormData] = useState({
     name: "",
@@ -66,8 +64,16 @@ export function RegistroForm() {
         formData.password
       );
 
+      const showToast = async () => {
+        toast({
+          title: "Registro exitoso",
+          description: "Por favor, inicia sesión para continuar.",
+          duration: 3000,
+        });
+      };
+
       if (success) {
-        router.push("/dashboard");
+        await showToast();
       } else {
         setError("El correo electrónico ya está registrado");
       }

@@ -1,28 +1,28 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useRouter } from "next/navigation"
-import { useEffect } from "react"
-import { useAuth } from "@/context/auth-context"
-import { DashboardSidebar } from "@/app/dashboard/components/dashboard-sidebar"
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { useAuth } from "@/context/auth-context";
+import { DashboardSidebar } from "@/app/dashboard/components/dashboard-sidebar";
 
 export default function DashboardLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
-  const { isAuthenticated } = useAuth()
-  const router = useRouter()
+  const { isAuthenticated } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
     if (!isAuthenticated) {
-      router.push("/")
+      router.push("/");
     }
-  }, [isAuthenticated, router])
+  }, [isAuthenticated, router]);
 
   if (!isAuthenticated) {
-    return null
+    return null;
   }
 
   return (
@@ -34,6 +34,5 @@ export default function DashboardLayout({
         </div>
       </div>
     </div>
-  )
+  );
 }
-

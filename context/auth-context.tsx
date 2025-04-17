@@ -50,14 +50,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   ): Promise<boolean> => {
     try {
       // Realizar la solicitud a la API
-      const response = await fetch(
-        "https://fundacite-backend-production.up.railway.app/api/auth/login",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password }),
-        }
-      );
+      const response = await fetch("http://localhost:3001/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
 
       if (!response.ok) {
         console.error("Error en la autenticación:", response.statusText);
@@ -93,31 +90,37 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     password: string
   ): Promise<boolean> => {
     try {
-      const response = await fetch(
-        "https://fundacite-backend-production.up.railway.app/api/auth/register",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, email, password }),
-        }
-      );
+      const response = await fetch("http://localhost:3001/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password }),
+      });
 
       if (!response.ok) {
         console.error("Error en el registro:", response.statusText);
         return Promise.resolve(false);
       }
 
+      console.log("Registro exitoso");
+
+      // Ensure toast is executed after successful registration
       toast({
         title: "Registro exitoso",
         description: "Por favor, inicia sesión para continuar.",
         duration: 3000,
       });
 
-      router.push("/login");
-
       return Promise.resolve(true);
     } catch (error) {
       console.error("Error en el registro:", error);
+
+      // Optionally, show a toast for errors
+      toast({
+        title: "Error en el registro",
+        description: "Ocurrió un problema, por favor intenta nuevamente.",
+        duration: 3000,
+      });
+
       return false;
     }
   };
