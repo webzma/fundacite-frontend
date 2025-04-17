@@ -41,6 +41,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setUser(null);
       setIsAuthenticated(false);
     }
+
+    if (!isAuthenticated) {
+      router.push("/login");
+    }
   }, []);
 
   const login = async (
@@ -107,22 +111,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return Promise.resolve(false);
       }
 
-      // Mostrar un mensaje de éxito
-      window.alert("Registro exitoso. Por favor, inicia sesión.");
+      toast({
+        title: "Registro exitoso",
+        description: "Por favor, inicia sesión para continuar.",
+        duration: 3000,
+      });
 
-      const createdUserToast = (userName: string) => {
-        toast({
-          title: "Usuario registrado con exito",
-          description: `El usuario ${userName} ha sido registrado exitosamente.`,
-          duration: 3000,
-        });
-      };
+      router.push("/login");
 
-      if (user) {
-        createdUserToast(user);
-      }
-
-      // No redirigir automáticamente ni actualizar el estado global
       return Promise.resolve(true);
     } catch (error) {
       console.error("Error en el registro:", error);
