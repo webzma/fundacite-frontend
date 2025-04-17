@@ -41,10 +41,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setUser(null);
       setIsAuthenticated(false);
     }
-
-    if (!isAuthenticated) {
-      router.push("/login");
-    }
   }, []);
 
   const login = async (
