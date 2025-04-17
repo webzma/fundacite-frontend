@@ -1,5 +1,6 @@
 "use client";
 
+import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
 
@@ -108,6 +109,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       // Mostrar un mensaje de éxito
       window.alert("Registro exitoso. Por favor, inicia sesión.");
+
+      const createdUserToast = (userName: string) => {
+        toast({
+          title: "Usuario registrado con exito",
+          description: `El usuario ${userName} ha sido registrado exitosamente.`,
+          duration: 3000,
+        });
+      };
+
+      if (user) {
+        createdUserToast(user);
+      }
 
       // No redirigir automáticamente ni actualizar el estado global
       return Promise.resolve(true);

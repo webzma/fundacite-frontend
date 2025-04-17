@@ -169,7 +169,7 @@ export default function Reportes() {
   const promedioEstudiantesPorTaller = courses.length > 0 ? Math.round(totalEstudiantes / courses.length) : 0
 
   // Función para exportar reportes (simulada)
-  const exportarReporte = (formato) => {
+  const exportarReporte = (formato: string) => {
     toast({
       title: "Reporte exportado",
       description: `El reporte ha sido exportado en formato ${formato}`,
