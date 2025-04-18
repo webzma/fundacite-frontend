@@ -25,9 +25,6 @@ export async function middleware(request: NextRequest) {
   try {
     // Verificar el JWT
     await jwtVerify(token, getJwtSecret());
-
-    // Si todo está bien, continuar
-    return NextResponse.next();
   } catch (err) {
     console.error("JWT inválido o expirado", err);
     const loginUrl = new URL("/login", request.url);
