@@ -1,5 +1,3 @@
-"use client";
-
 import { register } from "../../actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
