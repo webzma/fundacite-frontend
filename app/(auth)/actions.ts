@@ -92,15 +92,6 @@ export async function register(prevState: any, formData: FormData) {
     return { success: false, errors: fieldErrors };
   }
 
-  // Simulación: Validar si el correo ya está registrado
-  if (email === "wilberk@gmail.com") {
-    return {
-      success: false,
-      errors: { email: "Este correo ya está registrado" },
-    };
-  }
-
-  // Aquí iría la lógica para crear el usuario en la base de datos...
   const res = await fetch(
     "https://fundacite-backend-production.up.railway.app/api/auth/register",
     {
