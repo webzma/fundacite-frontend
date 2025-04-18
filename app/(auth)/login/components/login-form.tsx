@@ -5,12 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { AlertCircle, LogIn } from "lucide-react";
+import { AlertCircle, Eye, EyeOff, LogIn } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 
 export function LoginForm() {
   const [state, formAction, isLoading] = useActionState(login, { error: "" });
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <Card className="border-border shadow-lg overflow-hidden">
@@ -44,12 +45,28 @@ export function LoginForm() {
             </Label>
             <Input
               id="password"
+              type={showPassword ? "text" : "password"} // Cambia el tipo según el estado
               name="password"
               placeholder="••••••••"
               className="h-10"
-              type="password"
               required
             />
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              className="absolute inset-y-6 right-0 flex items-center justify-center h-10 w-10 text-muted-foreground hover:text-foreground"
+              onClick={() => setShowPassword(!showPassword)} // Alterna el estado
+            >
+              {showPassword ? (
+                <EyeOff className="h-4 w-4" />
+              ) : (
+                <Eye className="h-4 w-4" />
+              )}
+              <span className="sr-only">
+                {showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+              </span>
+            </Button>
           </div>
         </CardContent>
 
