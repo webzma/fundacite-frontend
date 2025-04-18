@@ -1,45 +1,27 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { login } from "@/app/(auth)/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { AlertCircle, Eye, EyeOff, LogIn } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { AlertCircle, LogIn, Eye, EyeOff } from "lucide-react";
-import { login } from "@/app/(auth)/actions";
+import { useActionState, useState } from "react";
 
 export function LoginForm() {
-  const router = useRouter();
-  const [error, setError] = useState("");
+  const [state, formAction, isLoading] = useActionState(login, { error: "" });
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-
-    try {
-      setIsLoading(true);
-      await login(formData);
-      router.push("/dashboard");
-    } catch (err: any) {
-      setError(err.message || "Error al iniciar sesión");
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   return (
     <Card className="border-border shadow-lg overflow-hidden">
       <div className="h-1 bg-primary w-full"></div>
-      <form onSubmit={handleSubmit} method="post">
+      <form action={formAction}>
         <CardContent className="space-y-4 pt-6">
-          {error && (
+          {state.error && (
             <Alert variant="destructive" className="text-sm">
               <AlertCircle className="h-4 w-4" />
-              <AlertDescription>{error}</AlertDescription>
+              <AlertDescription>{state.error}</AlertDescription>
             </Alert>
           )}
 
@@ -57,41 +39,34 @@ export function LoginForm() {
             />
           </div>
 
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <Label htmlFor="password" className="text-sm font-medium">
-                Contraseña
-              </Label>
-              <Button variant="link" className="p-0 h-auto text-xs">
-                ¿Olvidaste tu contraseña?
-              </Button>
-            </div>
-            <div className="relative">
-              <Input
-                id="password"
-                type={showPassword ? "text" : "password"}
-                name="password"
-                placeholder="••••••••"
-                className="h-10 pr-10"
-                required
-              />
-              <Button
-                type="button"
-                variant="ghost"
-                size="icon"
-                className="absolute right-0 top-0 h-10 w-10 text-muted-foreground hover:text-foreground"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? (
-                  <EyeOff className="h-4 w-4" />
-                ) : (
-                  <Eye className="h-4 w-4" />
-                )}
-                <span className="sr-only">
-                  {showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
-                </span>
-              </Button>
-            </div>
+          <div className="space-y-2 relative">
+            <Label htmlFor="password" className="text-sm font-medium">
+              Contraseña
+            </Label>
+            <Input
+              id="password"
+              type={showPassword ? "text" : "password"}
+              name="password"
+              placeholder="••••••••"
+              className="h-10"
+              required
+            />
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              className="absolute inset-y-6 right-0 flex items-center justify-center h-10 w-10 text-muted-foreground hover:text-foreground"
+              onClick={() => setShowPassword(!showPassword)} // Alterna el estado
+            >
+              {showPassword ? (
+                <EyeOff className="h-4 w-4" />
+              ) : (
+                <Eye className="h-4 w-4" />
+              )}
+              <span className="sr-only">
+                {showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+              </span>
+            </Button>
           </div>
         </CardContent>
 
@@ -124,7 +99,7 @@ export function LoginForm() {
             ) : (
               <span className="flex items-center gap-2">
                 <LogIn className="h-4 w-4" />
-                Iniciar Sesión
+                Iniciar sesión
               </span>
             )}
           </Button>
