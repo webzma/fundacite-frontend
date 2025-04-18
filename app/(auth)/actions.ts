@@ -7,14 +7,11 @@ export async function login(formData: FormData) {
   const email = formData.get("email");
   const password = formData.get("password");
 
-  const res = await fetch(
-    "https://fundacite-backend-production.up.railway.app/api/auth/login",
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    }
-  );
+  const res = await fetch("http://localhost:3001/api/auth/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password }),
+  });
 
   if (!res.ok) throw new Error("Credenciales incorrectas");
 
@@ -42,14 +39,11 @@ export async function register(formData: FormData) {
   const email = formData.get("email");
   const password = formData.get("password");
 
-  const res = await fetch(
-    "https://fundacite-backend-production.up.railway.app/api/auth/register",
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, password }),
-    }
-  );
+  const res = await fetch("http://localhost:3001/auth/register", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, email, password }),
+  });
 
   if (!res.ok) throw new Error("Error en el registro");
 
