@@ -1,7 +1,6 @@
 import type React from "react";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { AuthProvider } from "@/context/auth-context";
 import { CourseProvider } from "@/context/course-context";
 import { Toaster } from "@/components/ui/toaster";
 
@@ -20,10 +19,8 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={inter.className}>
-        <AuthProvider>
-          <CourseProvider>{children}</CourseProvider>
-          <Toaster />
-        </AuthProvider>
+        <CourseProvider>{children}</CourseProvider>
+        <Toaster />
       </body>
     </html>
   );

@@ -12,7 +12,22 @@ export default function Registro() {
             className="h-full w-full"
             viewBox="0 0 100 100"
             preserveAspectRatio="none"
-          ></svg>
+          >
+            <pattern
+              id="grid"
+              width="10"
+              height="10"
+              patternUnits="userSpaceOnUse"
+            >
+              <path
+                d="M 10 0 L 0 0 0 10"
+                fill="none"
+                stroke="white"
+                strokeWidth="0.5"
+              />
+            </pattern>
+            <rect width="100" height="100" fill="url(#grid)" />
+          </svg>
         </div>
         <div className="relative z-20 max-w-md text-white p-8">
           <h1 className="text-4xl font-bold mb-4">

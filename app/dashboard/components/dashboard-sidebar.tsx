@@ -1,7 +1,6 @@
 "use client";
 
 import { useRouter, usePathname } from "next/navigation";
-import { useAuth } from "@/context/auth-context";
 import { Button } from "@/components/ui/button";
 import {
   BookOpen,
@@ -19,14 +18,11 @@ import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export function DashboardSidebar() {
-  const { logout, user } = useAuth();
-  console.log(user);
   const router = useRouter();
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
   const handleLogout = () => {
-    logout();
     router.push("/");
   };
 
@@ -161,15 +157,11 @@ export function DashboardSidebar() {
               <div className="flex items-center gap-4 mb-4">
                 <Avatar>
                   <AvatarImage src="/placeholder.svg?height=40&width=40" />
-                  <AvatarFallback className="bg-primary/10 text-primary">
-                    {user?.name}
-                  </AvatarFallback>
+                  <AvatarFallback className="bg-primary/10 text-primary"></AvatarFallback>
                 </Avatar>
                 <div>
-                  <div className="font-medium">{user?.name}</div>
-                  <div className="text-xs text-muted-foreground">
-                    {user?.email}
-                  </div>
+                  <div className="font-medium"></div>
+                  <div className="text-xs text-muted-foreground"></div>
                 </div>
               </div>
               <Button
@@ -264,15 +256,11 @@ export function DashboardSidebar() {
             <div className="flex items-center gap-4 mb-4">
               <Avatar>
                 <AvatarImage src="/avatar.jpg" className="object-cover" />
-                <AvatarFallback className="bg-primary/10 text-primary">
-                  {user?.name.charAt(0)}
-                </AvatarFallback>
+                <AvatarFallback className="bg-primary/10 text-primary"></AvatarFallback>
               </Avatar>
               <div>
-                <div className="font-medium">{user?.name}</div>
-                <div className="text-xs text-muted-foreground">
-                  {user?.email}
-                </div>
+                <div className="font-medium"></div>
+                <div className="text-xs text-muted-foreground"></div>
               </div>
             </div>
             <Button

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useAuth } from "@/context/auth-context";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,9 +8,9 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle, UserPlus, Eye, EyeOff } from "lucide-react";
 import { toast } from "@/components/ui/use-toast";
+import { register } from "../../actions";
 
 export function RegistroForm() {
-  const { register } = useAuth();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -49,6 +48,7 @@ export function RegistroForm() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
+    const formData = new FormData(e.currentTarget);
 
     if (!validateForm()) return;
 
@@ -58,11 +58,7 @@ export function RegistroForm() {
       // Simulamos un pequeño retraso para el registro
       await new Promise((resolve) => setTimeout(resolve, 800));
 
-      const success = register(
-        formData.name,
-        formData.email,
-        formData.password
-      );
+      const success = register(formData);
 
       const showToast = async () => {
         toast({

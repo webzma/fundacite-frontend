@@ -2,46 +2,30 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/context/auth-context";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle, LogIn, Eye, EyeOff } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox";
+import { login } from "@/app/(auth)/actions";
 
 export function LoginForm() {
   const router = useRouter();
-  const { login } = useAuth(); // Usar el método login del contexto
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError("");
-    setIsLoading(true);
+    const formData = new FormData(e.currentTarget);
 
     try {
-      // Llamar al método login del contexto
-      const success = await login(email, password, rememberMe);
-
-      if (success) {
-        // Redirigir al dashboard si el inicio de sesión es exitoso
-        router.push("/dashboard");
-      } else {
-        setError(
-          "Credenciales inválidas. Por favor, verifica tu correo y contraseña."
-        );
-      }
-    } catch (err) {
-      setError(
-        "Ocurrió un error al iniciar sesión. Inténtalo de nuevo más tarde."
-      );
+      setIsLoading(true);
+      await login(formData);
+      router.push("/dashboard");
+    } catch (err: any) {
+      setError(err.message || "Error al iniciar sesión");
     } finally {
       setIsLoading(false);
     }
@@ -66,9 +50,8 @@ export function LoginForm() {
             <Input
               id="email"
               type="email"
+              name="email"
               placeholder="admin@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
               className="h-10"
               required
             />
@@ -87,9 +70,8 @@ export function LoginForm() {
               <Input
                 id="password"
                 type={showPassword ? "text" : "password"}
+                name="password"
                 placeholder="••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
                 className="h-10 pr-10"
                 required
               />
@@ -110,20 +92,6 @@ export function LoginForm() {
                 </span>
               </Button>
             </div>
-          </div>
-
-          <div className="flex items-center space-x-2">
-            <Checkbox
-              id="remember"
-              checked={rememberMe}
-              onCheckedChange={(checked) => setRememberMe(checked === true)}
-            />
-            <Label
-              htmlFor="remember"
-              className="text-sm font-medium cursor-pointer"
-            >
-              Recordar mi sesión
-            </Label>
           </div>
         </CardContent>
 

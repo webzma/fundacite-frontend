@@ -26,6 +26,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [token, setToken] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
@@ -33,6 +34,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const storedUser = localStorage.getItem("user");
 
     if (storedToken && storedUser) {
+      console.log("hello");
       setToken(storedToken);
       setUser(JSON.parse(storedUser));
       setIsAuthenticated(true);
@@ -41,13 +43,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setUser(null);
       setIsAuthenticated(false);
     }
+
+    setIsLoading(false);
   }, []);
 
-  const login = async (
-    email: string,
-    password: string,
-    rememberMe = false
-  ): Promise<boolean> => {
+  const login = async (email: string, password: string): Promise<boolean> => {
     try {
       // Realizar la solicitud a la API
       const response = await fetch("http://localhost:3001/api/auth/login", {
@@ -63,17 +63,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       const data = await response.json();
       const { token, user } = data;
-      console.log(token, user);
+
+      console.log(token);
 
       // Guardar el token y los datos del usuario
       setUser(user);
       setToken(token);
       setIsAuthenticated(true);
 
-      if (rememberMe) {
-        localStorage.setItem("token", token);
-        localStorage.setItem("user", JSON.stringify(user));
-      }
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
 
       router.push("/dashboard");
 
@@ -100,8 +99,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         console.error("Error en el registro:", response.statusText);
         return Promise.resolve(false);
       }
-
-      console.log("Registro exitoso");
 
       // Ensure toast is executed after successful registration
       toast({
@@ -134,6 +131,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     router.push("/");
   };
 
+  if (isLoading) {
+    return <div>Cargando...</div>;
+  }
+
   return (
     <AuthContext.Provider
       value={{ login, isAuthenticated, logout, user, register }}
@@ -141,12 +142,4 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       {children}
     </AuthContext.Provider>
   );
-}
-
-export function useAuth() {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error("useAuth debe ser usado dentro de un AuthProvider");
-  }
-  return context;
 }

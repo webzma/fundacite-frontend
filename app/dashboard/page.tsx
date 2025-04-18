@@ -1,7 +1,6 @@
-"use client";
+import { cookies } from "next/headers";
 
-import { useAuth } from "@/context/auth-context";
-import { useCourses } from "@/context/course-context";
+//import { useCourses } from "@/context/course-context";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   BookOpen,
@@ -13,9 +12,12 @@ import {
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
-export default function Dashboard() {
-  const { courses } = useCourses();
-  const { user } = useAuth();
+export default async function Dashboard() {
+  const user = (await cookies()).get("user")?.value;
+  const { name, email } = JSON.parse(user ?? "{}");
+
+  // Simulación de datos de cursos en el cliente
+  /*   const { courses } = useCourses();
 
   const totalStudents = courses.reduce(
     (acc, course) => acc + course.students,
@@ -24,13 +26,13 @@ export default function Dashboard() {
   const activeWorkshops = courses.filter(
     (course) => course.status === "active"
   ).length;
-
+ */
   return (
     <div>
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
         <div>
           <h1 className="text-3xl font-bold text-primary mb-1">Dashboard</h1>
-          <p className="text-muted-foreground">Bienvenido, {user?.name}</p>
+          <p className="text-muted-foreground">Bienvenido {name}</p>
         </div>
         <Button asChild>
           <Link
@@ -52,7 +54,7 @@ export default function Dashboard() {
             <BookOpen className="dashboard-card-icon" />
           </CardHeader>
           <CardContent className="dashboard-card-content">
-            <div className="dashboard-card-value">{courses.length}</div>
+            <div className="dashboard-card-value">{/* {courses.length} */}</div>
             <p className="dashboard-card-label">Actividades registradas</p>
           </CardContent>
         </Card>
@@ -65,7 +67,9 @@ export default function Dashboard() {
             <Calendar className="dashboard-card-icon" />
           </CardHeader>
           <CardContent className="dashboard-card-content">
-            <div className="dashboard-card-value">{activeWorkshops}</div>
+            <div className="dashboard-card-value">
+              {/* {activeWorkshops} */}
+            </div>
             <p className="dashboard-card-label">En progreso</p>
           </CardContent>
         </Card>
@@ -78,7 +82,7 @@ export default function Dashboard() {
             <Users className="dashboard-card-icon" />
           </CardHeader>
           <CardContent className="dashboard-card-content">
-            <div className="dashboard-card-value">{totalStudents}</div>
+            <div className="dashboard-card-value">{/* {totalStudents} */}</div>
             <p className="dashboard-card-label">Inscritos en talleres</p>
           </CardContent>
         </Card>
@@ -106,7 +110,7 @@ export default function Dashboard() {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {courses.slice(0, 5).map((course) => (
+              {/* {courses.slice(0, 5).map((course) => (
                 <div
                   key={course.id}
                   className="flex items-center justify-between border-b border-border pb-4"
@@ -134,7 +138,7 @@ export default function Dashboard() {
                     </span>
                   </div>
                 </div>
-              ))}
+              ))} */}
             </div>
             <div className="mt-4 text-center">
               <Button variant="outline" asChild size="sm">
