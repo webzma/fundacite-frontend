@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { AlertCircle, LogIn, UserPlus } from "lucide-react";
+import { AlertCircle, Eye, EyeOff, LogIn, UserPlus } from "lucide-react";
 import { useActionState } from "react";
 
 const initialState = {
@@ -17,6 +17,7 @@ const initialState = {
 
 export function RegistroForm() {
   const [state, formAction, isLoading] = useActionState(register, initialState);
+  const [showPassword, setShowPassword] = useState(false);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -73,16 +74,32 @@ export function RegistroForm() {
             )}
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-2 relative">
             <Label htmlFor="password">Contraseña</Label>
             <Input
               id="password"
               name="password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="••••••••"
               value={formData.password} // Vincula el valor al estado
               onChange={handleChange} // Actualiza el estado al cambiar
             />
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              className="absolute inset-y-6 right-0 flex items-center justify-center h-10 w-10 text-muted-foreground hover:text-foreground"
+              onClick={() => setShowPassword(!showPassword)} // Alterna el estado
+            >
+              {showPassword ? (
+                <EyeOff className="h-4 w-4" />
+              ) : (
+                <Eye className="h-4 w-4" />
+              )}
+              <span className="sr-only">
+                {showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+              </span>
+            </Button>
             <p className="text-xs text-muted-foreground mt-1">
               La contraseña debe tener al menos 8 caracteres
             </p>
@@ -96,11 +113,12 @@ export function RegistroForm() {
             <Input
               id="confirmPassword"
               name="confirmPassword"
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="••••••••"
               value={formData.confirmPassword} // Vincula el valor al estado
               onChange={handleChange} // Actualiza el estado al cambiar
             />
+
             {state?.errors?.confirmPassword && (
               <p className="text-xs text-red-500">
                 {state.errors.confirmPassword}
