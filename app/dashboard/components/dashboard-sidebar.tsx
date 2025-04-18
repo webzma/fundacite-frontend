@@ -22,8 +22,9 @@ export function DashboardSidebar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleLogout = () => {
-    router.push("/");
+  const handleLogout = async () => {
+    await fetch("/api/logout");
+    router.push("/"); // O se puede omitir, ya que la redirección está en el backend
   };
 
   // Actualizar el nombre del elemento de navegación para reflejar los tres tipos de actividades
