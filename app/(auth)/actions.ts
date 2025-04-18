@@ -15,11 +15,14 @@ export async function login(
     return { error: "Email y contraseña son obligatorios" };
   }
 
-  const res = await fetch("http://localhost:3001/api/auth/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password }),
-  });
+  const res = await fetch(
+    "https://fundacite-backend-production.up.railway.app/api/auth/login",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    }
+  );
 
   if (!res.ok) {
     const data = await res.json().catch(() => ({}));
@@ -94,11 +97,14 @@ export async function register(prevState: any, formData: FormData) {
   }
 
   // Aquí iría la lógica para crear el usuario en la base de datos...
-  const res = await fetch("http://localhost:3001/api/auth/register", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, email, password }),
-  });
+  const res = await fetch(
+    "https://fundacite-backend-production.up.railway.app/api/auth/register",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, password }),
+    }
+  );
 
   if (!res.ok) {
     const data = await res.json().catch(() => ({}));
