@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { register } from "../../actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,6 +18,18 @@ const initialState = {
 export function RegistroForm() {
   const [state, formAction] = useActionState(register, initialState);
 
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
   return (
     <Card className="border-border shadow-lg overflow-hidden">
       <div className="h-1 bg-primary w-full"></div>
@@ -33,7 +46,13 @@ export function RegistroForm() {
 
           <div className="space-y-2">
             <Label htmlFor="name">Nombre completo</Label>
-            <Input id="name" name="name" placeholder="Wilberk Ledezma" />
+            <Input
+              id="name"
+              name="name"
+              placeholder="Wilberk Ledezma"
+              value={formData.name} // Vincula el valor al estado
+              onChange={handleChange} // Actualiza el estado al cambiar
+            />
             {state?.errors?.name && (
               <p className="text-xs text-red-500">{state.errors.name}</p>
             )}
@@ -46,6 +65,8 @@ export function RegistroForm() {
               name="email"
               type="email"
               placeholder="wilberk@gmail.com"
+              value={formData.email} // Vincula el valor al estado
+              onChange={handleChange} // Actualiza el estado al cambiar
             />
             {state?.errors?.email && (
               <p className="text-xs text-red-500">{state.errors.email}</p>
@@ -59,6 +80,8 @@ export function RegistroForm() {
               name="password"
               type="password"
               placeholder="••••••••"
+              value={formData.password} // Vincula el valor al estado
+              onChange={handleChange} // Actualiza el estado al cambiar
             />
             <p className="text-xs text-muted-foreground mt-1">
               La contraseña debe tener al menos 8 caracteres
@@ -75,6 +98,8 @@ export function RegistroForm() {
               name="confirmPassword"
               type="password"
               placeholder="••••••••"
+              value={formData.confirmPassword} // Vincula el valor al estado
+              onChange={handleChange} // Actualiza el estado al cambiar
             />
             {state?.errors?.confirmPassword && (
               <p className="text-xs text-red-500">
