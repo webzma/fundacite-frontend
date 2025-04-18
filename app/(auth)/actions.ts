@@ -8,7 +8,7 @@ export async function login(formData: FormData) {
   const password = formData.get("password");
 
   const res = await fetch(
-    "fundacite-backend-production.up.railway.app/api/auth/login",
+    "https://fundacite-backend-production.up.railway.app/api/auth/login",
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -43,7 +43,7 @@ export async function register(formData: FormData) {
   const password = formData.get("password");
 
   const res = await fetch(
-    "fundacite-backend-production.up.railway.app/api/auth/register",
+    "https://fundacite-backend-production.up.railway.app/api/auth/login",
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
