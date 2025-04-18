@@ -5,7 +5,6 @@ import Link from "next/link";
 export default function Home() {
   return (
     <main className="flex min-h-screen">
-      {/* Panel izquierdo - Imagen/Branding */}
       <div className="hidden lg:flex lg:w-1/2 bg-primary items-center justify-center relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/90 to-primary/70 z-10"></div>
         <div className="absolute inset-0 opacity-20">

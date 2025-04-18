@@ -43,7 +43,7 @@ export async function register(formData: FormData) {
   const password = formData.get("password");
 
   const res = await fetch(
-    "https://fundacite-backend-production.up.railway.app/api/auth/login",
+    "https://fundacite-backend-production.up.railway.app/api/auth/register",
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
