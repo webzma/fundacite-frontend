@@ -30,7 +30,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export default function Talleres() {
+export default function Actividades() {
   const { courses, deleteCourse } = useCourses();
   const [searchTerm, setSearchTerm] = useState("");
   // Añadir estado para el filtro de tipo de actividad
@@ -57,7 +57,7 @@ export default function Talleres() {
         </div>
         <Button asChild>
           <Link
-            href="/dashboard/talleres/crear"
+            href="/dashboard/actividades/crear"
             className="inline-flex items-center"
           >
             <Plus className="mr-2 h-4 w-4" /> Crear Actividad
@@ -184,7 +184,7 @@ export default function Talleres() {
                         <DropdownMenuContent align="end">
                           <DropdownMenuItem asChild>
                             <Link
-                              href={`/dashboard/talleres/editar/${course.id}`}
+                              href={`/dashboard/actividades/editar/${course.id}`}
                               className="cursor-pointer"
                             >
                               <Edit className="mr-2 h-4 w-4" /> Editar

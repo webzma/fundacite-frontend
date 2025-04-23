@@ -36,7 +36,7 @@ export default async function Dashboard() {
         </div>
         <Button asChild>
           <Link
-            href="/dashboard/talleres/crear"
+            href="/dashboard/actividades/crear"
             className="inline-flex items-center"
           >
             Crear actividad

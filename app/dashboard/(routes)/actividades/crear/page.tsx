@@ -1,20 +1,33 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import { useCourses } from "@/context/course-context"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Label } from "@/components/ui/label"
-import { ArrowLeft, Save } from "lucide-react"
-import Link from "next/link"
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useCourses } from "@/context/course-context";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { ArrowLeft, Save } from "lucide-react";
+import Link from "next/link";
 
 export default function CrearTaller() {
-  const router = useRouter()
-  const { addCourse } = useCourses()
+  const router = useRouter();
+  const { addCourse } = useCourses();
 
   const [formData, setFormData] = useState({
     title: "",
@@ -24,24 +37,24 @@ export default function CrearTaller() {
     capacity: "",
     status: "pending",
     type: "taller",
-  })
+  });
 
   const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleSelectChange = (name, value) => {
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     // Validación básica
     if (!formData.title || !formData.instructor || !formData.duration) {
-      alert("Por favor completa los campos obligatorios")
-      return
+      alert("Por favor completa los campos obligatorios");
+      return;
     }
 
     // Crear nuevo curso
@@ -51,27 +64,33 @@ export default function CrearTaller() {
       students: 0,
       duration: Number.parseInt(formData.duration),
       capacity: Number.parseInt(formData.capacity),
-    })
+    });
 
-    router.push("/dashboard/talleres")
-  }
+    router.push("/dashboard/actividades");
+  };
 
   return (
     <div className="fade-in">
       <div className="flex items-center mb-6">
         <Button variant="outline" size="icon" asChild className="mr-2">
-          <Link href="/dashboard/talleres">
+          <Link href="/dashboard/actividades">
             <ArrowLeft className="h-4 w-4" />
           </Link>
         </Button>
-        <h1 className="text-2xl md:text-3xl font-bold text-primary">Crear Nueva Actividad</h1>
+        <h1 className="text-2xl md:text-3xl font-bold text-primary">
+          Crear nueva actividad
+        </h1>
       </div>
 
       <Card className="border-border shadow-sm">
         <form onSubmit={handleSubmit}>
           <CardHeader className="pb-4 border-b">
-            <CardTitle className="text-xl text-primary">Información de la Actividad</CardTitle>
-            <CardDescription>Completa la información para crear una nueva actividad.</CardDescription>
+            <CardTitle className="text-xl text-primary">
+              Información de la Actividad
+            </CardTitle>
+            <CardDescription>
+              Completa la información para crear una nueva actividad.
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6 pt-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -106,6 +125,7 @@ export default function CrearTaller() {
                     <SelectItem value="taller">Taller</SelectItem>
                     <SelectItem value="curso">Curso</SelectItem>
                     <SelectItem value="charla">Charla</SelectItem>
+                    <SelectItem value="congreso">Congreso</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -120,7 +140,21 @@ export default function CrearTaller() {
                 name="description"
                 value={formData.description}
                 onChange={handleChange}
-                placeholder="Describe el contenido del taller"
+                placeholder="Describe el contenido de la actividad"
+                rows={4}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="goal" className="text-sm font-medium">
+                Objetivo de la actividad
+              </Label>
+              <Textarea
+                id="goal"
+                name="goal"
+                value={formData.description}
+                onChange={handleChange}
+                placeholder="Describe el objetivo de la actividad"
                 rows={4}
               />
             </div>
@@ -180,17 +214,21 @@ export default function CrearTaller() {
             </div>
           </CardContent>
           <CardFooter className="flex flex-col sm:flex-row sm:justify-between gap-3 pt-6 border-t">
-            <Button variant="outline" type="button" asChild className="w-full sm:w-auto">
-              <Link href="/dashboard/talleres">Cancelar</Link>
+            <Button
+              variant="outline"
+              type="button"
+              asChild
+              className="w-full sm:w-auto"
+            >
+              <Link href="/dashboard/actividades">Cancelar</Link>
             </Button>
             <Button type="submit" className="w-full sm:w-auto">
               <Save className="mr-2 h-4 w-4" />
-              Crear Taller
+              Crear actividad
             </Button>
           </CardFooter>
         </form>
       </Card>
     </div>
-  )
+  );
 }
-

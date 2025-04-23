@@ -30,7 +30,7 @@ export function DashboardSidebar() {
   // Actualizar el nombre del elemento de navegación para reflejar los tres tipos de actividades
   const navigation = [
     { name: "Dashboard", href: "/dashboard", icon: Home },
-    { name: "Actividades", href: "/dashboard/talleres", icon: BookOpen },
+    { name: "Actividades", href: "/dashboard/actividades", icon: BookOpen },
     { name: "Reportes", href: "/dashboard/reportes", icon: BarChart3 },
     { name: "Configuración", href: "/dashboard/configuracion", icon: Settings },
   ];
