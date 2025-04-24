@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCourses } from "@/context/course-context";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -45,6 +45,12 @@ export default function Actividades() {
         activityType === "" ||
         course.type === activityType)
   );
+
+  useEffect(() => {
+    fetch(
+      "https://fundacite-backend-production.up.railway.app/api/students"
+    ).then((data) => console.log(data));
+  }, []);
 
   return (
     <div className="fade-in">

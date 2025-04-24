@@ -9,6 +9,7 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle, Eye, EyeOff, LogIn, UserPlus } from "lucide-react";
 import { useActionState } from "react";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 const initialState = {
   errors: {},
@@ -24,7 +25,12 @@ export function RegistroForm() {
     email: "",
     password: "",
     confirmPassword: "",
+    role: "director",
   });
+
+  const handleRoleChange = (value) => {
+    setFormData((prev) => ({ ...prev, role: value }));
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -124,6 +130,34 @@ export function RegistroForm() {
                 {state.errors.confirmPassword}
               </p>
             )}
+          </div>
+
+          <div className="space-y-2">
+            <Label className="text-sm font-medium">Tipo de usuario</Label>
+            <RadioGroup
+              value={formData.role}
+              onValueChange={handleRoleChange}
+              className="flex flex-col space-y-1"
+            >
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="director" id="director" />
+                <Label htmlFor="director" className="text-sm cursor-pointer">
+                  Director General
+                </Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="coordinador" id="coordinador" />
+                <Label htmlFor="coordinador" className="text-sm cursor-pointer">
+                  Coordinador
+                </Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="analista" id="analista" />
+                <Label htmlFor="analista" className="text-sm cursor-pointer">
+                  Analista
+                </Label>
+              </div>
+            </RadioGroup>
           </div>
         </CardContent>
 

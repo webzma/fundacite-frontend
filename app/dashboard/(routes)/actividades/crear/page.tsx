@@ -212,6 +212,113 @@ export default function CrearTaller() {
                 </Select>
               </div>
             </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+              <div className="space-y-2">
+                <Label htmlFor="person" className="text-sm font-medium">
+                  Persona responsable<span className="text-destructive">*</span>
+                </Label>
+                <Input
+                  id="person"
+                  name="person"
+                  type="text"
+                  min="1"
+                  value={formData.duration}
+                  onChange={handleChange}
+                  placeholder="Ej: Wilberk Ledezma"
+                  className="h-10"
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="instructor" className="text-sm font-medium">
+                  Intructor de la actividad
+                  <span className="text-destructive">*</span>
+                </Label>
+                <Input
+                  id="instructor"
+                  name="instructor"
+                  type="text"
+                  min="1"
+                  value={formData.duration}
+                  onChange={handleChange}
+                  placeholder="Ej: Wilberk Ledezma"
+                  className="h-10"
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="phone" className="text-sm font-medium">
+                  Teléfono <span className="text-destructive">*</span>
+                </Label>
+                <Input
+                  id="phone"
+                  name="phone"
+                  type="text"
+                  min="1"
+                  value={formData.duration}
+                  onChange={handleChange}
+                  placeholder="Ej: 04123454538"
+                  className="h-10"
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="" className="text-sm font-medium">
+                  Municipio
+                </Label>
+                <Select
+                  name=""
+                  value={formData.status}
+                  onValueChange={(value) => handleSelectChange("status", value)}
+                >
+                  <SelectTrigger id="" className="h-10">
+                    <SelectValue placeholder="Seleccionar municipio" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="active">Aristides Bastidas</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="" className="text-sm font-medium">
+                  Parroquia
+                </Label>
+                <Select
+                  name=""
+                  value={formData.status}
+                  onValueChange={(value) => handleSelectChange("status", value)}
+                >
+                  <SelectTrigger id="" className="h-10">
+                    <SelectValue placeholder="Seleccionar parroquia" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="tibana">Tibana</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="institution" className="text-sm font-medium">
+                  Institución <span className="text-destructive">*</span>
+                </Label>
+                <Input
+                  id="institution"
+                  name="institution"
+                  type="text"
+                  min="1"
+                  value={formData.duration}
+                  onChange={handleChange}
+                  placeholder="Escuela básica Julio Rutia"
+                  className="h-10"
+                  required
+                />
+              </div>
+            </div>
           </CardContent>
           <CardFooter className="flex flex-col sm:flex-row sm:justify-between gap-3 pt-6 border-t">
             <Button
