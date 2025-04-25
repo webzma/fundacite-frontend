@@ -54,7 +54,7 @@ export default async function Dashboard() {
             <BookOpen className="dashboard-card-icon" />
           </CardHeader>
           <CardContent className="dashboard-card-content">
-            <div className="dashboard-card-value">{/* {courses.length} */}</div>
+            <div className="dashboard-card-value">24</div>
             <p className="dashboard-card-label">Actividades registradas</p>
           </CardContent>
         </Card>
@@ -67,10 +67,8 @@ export default async function Dashboard() {
             <Calendar className="dashboard-card-icon" />
           </CardHeader>
           <CardContent className="dashboard-card-content">
-            <div className="dashboard-card-value">
-              {/* {activeWorkshops} */}
-            </div>
-            <p className="dashboard-card-label">En progreso</p>
+            <div className="dashboard-card-value">10</div>
+            <p className="dashboard-card-label">Actividades activas</p>
           </CardContent>
         </Card>
 
@@ -82,7 +80,7 @@ export default async function Dashboard() {
             <Users className="dashboard-card-icon" />
           </CardHeader>
           <CardContent className="dashboard-card-content">
-            <div className="dashboard-card-value">{/* {totalStudents} */}</div>
+            <div className="dashboard-card-value">70</div>
             <p className="dashboard-card-label">Inscritos en talleres</p>
           </CardContent>
         </Card>
