@@ -1,9 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useCourses } from "@/context/course-context";
+import { useState } from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import {
   Table,
   TableBody,
@@ -12,206 +20,223 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Badge } from "@/components/ui/badge";
-import { Edit, MoreVertical, Plus, Search, Trash2, Filter } from "lucide-react";
-import Link from "next/link";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { ClipboardList, Edit, Plus, Search, Trash2, Users } from "lucide-react";
 
-export default function Actividades() {
-  const { courses, deleteCourse } = useCourses();
+const MOCK_COURSES = [
+  {
+    id: "1",
+    title: "Introducción a React",
+    description:
+      "Aprende los fundamentos de React y crea tu primera aplicación.",
+    instructor: "Juan Pérez",
+    duration: 12,
+    capacity: 20,
+    students: 15,
+    status: "active",
+    type: "curso",
+  },
+  {
+    id: "2",
+    title: "Diseño UX/UI Avanzado",
+    description:
+      "Técnicas avanzadas de diseño de interfaces y experiencia de usuario.",
+    instructor: "María González",
+    duration: 16,
+    capacity: 15,
+    students: 10,
+    status: "active",
+    type: "taller",
+  },
+  {
+    id: "3",
+    title: "Node.js para Principiantes",
+    description: "Introducción al desarrollo backend con Node.js y Express.",
+    instructor: "Carlos Rodríguez",
+    duration: 10,
+    capacity: 25,
+    students: 18,
+    status: "pending",
+    type: "curso",
+  },
+  {
+    id: "4",
+    title: "Desarrollo Mobile con Flutter",
+    description: "Crea aplicaciones móviles multiplataforma con Flutter.",
+    instructor: "Ana Martínez",
+    duration: 20,
+    capacity: 15,
+    students: 12,
+    status: "active",
+    type: "taller",
+  },
+  {
+    id: "5",
+    title: "Introducción a la Inteligencia Artificial",
+    description: "Conceptos básicos de IA y su aplicación en la industria.",
+    instructor: "Roberto Sánchez",
+    duration: 2,
+    capacity: 50,
+    students: 45,
+    status: "active",
+    type: "charla",
+  },
+];
+
+export default function actividadesPage() {
+  const [courses, setCourses] = useState(MOCK_COURSES);
   const [searchTerm, setSearchTerm] = useState("");
-  // Añadir estado para el filtro de tipo de actividad
-  const [activityType, setActivityType] = useState("");
 
-  // Actualizar el filtrado de cursos para incluir el tipo de actividad
   const filteredCourses = courses.filter(
     (course) =>
-      (course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        course.instructor.toLowerCase().includes(searchTerm.toLowerCase())) &&
-      (activityType === "todos" ||
-        activityType === "" ||
-        course.type === activityType)
+      course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      course.instructor.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      course.type.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
-  useEffect(() => {
-    fetch(
-      "https://fundacite-backend-production.up.railway.app/api/students"
-    ).then((data) => console.log(data));
-  }, []);
 
   return (
     <div className="fade-in">
-      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
-        <div>
-          <h1 className="text-3xl font-bold text-primary mb-1">Actividades</h1>
-          <p className="text-muted-foreground">
-            Gestiona talleres, cursos y charlas desde aquí
-          </p>
-        </div>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+        <h1 className="text-2xl md:text-3xl font-bold text-primary">
+          Actividades
+        </h1>
         <Button asChild>
-          <Link
-            href="/dashboard/actividades/crear"
-            className="inline-flex items-center"
-          >
-            <Plus className="mr-2 h-4 w-4" /> Crear Actividad
+          <Link href="/dashboard/actividades/crear">
+            <Plus className="mr-2 h-4 w-4" />
+            Nueva Actividad
           </Link>
         </Button>
       </div>
 
-      {/* Añadir filtro por tipo de actividad */}
-      <Card className="mb-6">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-lg font-semibold text-primary">
-            Buscar Actividades
-          </CardTitle>
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-4">
+        <div className="relative w-full md:w-64">
+          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Input
+            type="search"
+            placeholder="Buscar actividades..."
+            className="pl-8"
+            value={searchTerm}
+          />
+        </div>
+      </div>
+
+      <Card>
+        <CardHeader className="pb-4">
+          <CardTitle className="text-lg">Lista de Actividades</CardTitle>
+          <CardDescription>
+            Gestiona todas las actividades disponibles.
+          </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <div className="relative flex-1">
-              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-              <Input
-                type="search"
-                placeholder="Buscar por título o instructor..."
-                className="pl-8 w-full"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
-            <div className="w-full sm:w-auto">
-              <Select
-                value={activityType || "todos"}
-                onValueChange={(value) => setActivityType(value)}
-              >
-                <SelectTrigger className="w-full sm:w-[180px]">
-                  <SelectValue placeholder="Tipo de actividad" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="todos">Todos los tipos</SelectItem>
-                  <SelectItem value="taller">Talleres</SelectItem>
-                  <SelectItem value="curso">Cursos</SelectItem>
-                  <SelectItem value="charla">Charlas</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <Button variant="outline" className="sm:w-auto">
-              <Filter className="mr-2 h-4 w-4" />
-              Más Filtros
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-
-      <div className="border rounded-lg shadow-sm overflow-hidden bg-card">
-        <div className="overflow-x-auto">
-          <Table className="data-table ">
-            {/* Añadir columna de tipo de actividad en la tabla */}
-            <TableHeader>
-              <TableRow>
-                <TableHead>Título</TableHead>
-                <TableHead>Tipo</TableHead>
-                <TableHead>Instructor</TableHead>
-                <TableHead className="hidden md:table-cell">Duración</TableHead>
-                <TableHead className="hidden sm:table-cell">
-                  Estudiantes
-                </TableHead>
-                <TableHead>Estado</TableHead>
-                <TableHead className="text-right">Acciones</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredCourses.length === 0 ? (
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
                 <TableRow>
-                  <TableCell
-                    colSpan={7}
-                    className="text-center py-8 text-muted-foreground"
-                  >
-                    No se encontraron actividades
-                  </TableCell>
+                  <TableHead>Título</TableHead>
+                  <TableHead>Tipo</TableHead>
+                  <TableHead>Instructor</TableHead>
+                  <TableHead>Duración</TableHead>
+                  <TableHead>Estado</TableHead>
+                  <TableHead>Estudiantes</TableHead>
+                  <TableHead className="text-right">Acciones</TableHead>
                 </TableRow>
-              ) : (
-                filteredCourses.map((course) => (
-                  <TableRow key={course.id}>
-                    <TableCell className="font-medium">
-                      {course.title}
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant="outline">
-                        {course.type === "taller"
-                          ? "Taller"
-                          : course.type === "curso"
-                          ? "Curso"
-                          : "Charla"}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>{course.instructor}</TableCell>
-                    <TableCell className="hidden md:table-cell">
-                      {course.duration}{" "}
-                      {course.type === "charla" ? "horas" : "horas"}
-                    </TableCell>
-                    <TableCell className="hidden sm:table-cell">
-                      {course.students}
-                    </TableCell>
-                    <TableCell>
-                      <Badge
-                        className={
-                          course.status === "active"
-                            ? "badge-success"
-                            : "badge-warning"
-                        }
+              </TableHeader>
+              <TableBody>
+                {filteredCourses.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={7} className="text-center py-4">
+                      No se encontraron actividades. ¿Deseas{" "}
+                      <Link
+                        href="/dashboard/actividades/crear"
+                        className="text-primary hover:underline"
                       >
-                        {course.status === "active" ? "Activo" : "Pendiente"}
-                      </Badge>
+                        crear una nueva
+                      </Link>
+                      ?
                     </TableCell>
-                    <TableCell className="text-right">
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
+                  </TableRow>
+                ) : (
+                  filteredCourses.map((course) => (
+                    <TableRow key={course.id}>
+                      <TableCell className="font-medium">
+                        {course.title}
+                      </TableCell>
+                      <TableCell>
+                        <Badge variant="outline" className="bg-primary/10">
+                          {course.type === "taller"
+                            ? "Taller"
+                            : course.type === "curso"
+                            ? "Curso"
+                            : "Charla"}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>{course.instructor}</TableCell>
+                      <TableCell>{course.duration} horas</TableCell>
+                      <TableCell>
+                        <Badge
+                          variant="outline"
+                          className={
+                            course.status === "active"
+                              ? "bg-green-100 text-green-800"
+                              : "bg-yellow-100 text-yellow-800"
+                          }
+                        >
+                          {course.status === "active" ? "Activo" : "Pendiente"}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>
+                        {course.students}/{course.capacity || "∞"}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <div className="flex justify-end gap-2">
                           <Button
                             variant="ghost"
                             size="icon"
-                            className="h-8 w-8"
+                            asChild
+                            title="Asistencia"
                           >
-                            <MoreVertical className="h-4 w-4" />
-                            <span className="sr-only">Abrir menú</span>
+                            <Link
+                              href={`/dashboard/actividades/asistencia/${course.id}`}
+                            >
+                              <ClipboardList className="h-4 w-4 text-primary" />
+                            </Link>
                           </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                          <DropdownMenuItem asChild>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            asChild
+                            title="Inscripciones"
+                          >
+                            <Link
+                              href={`/dashboard/actividades/inscripciones/${course.id}`}
+                            >
+                              <Users className="h-4 w-4 text-primary" />
+                            </Link>
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            asChild
+                            title="Editar"
+                          >
                             <Link
                               href={`/dashboard/actividades/editar/${course.id}`}
-                              className="cursor-pointer"
                             >
-                              <Edit className="mr-2 h-4 w-4" /> Editar
+                              <Edit className="h-4 w-4" />
                             </Link>
-                          </DropdownMenuItem>
-                          <DropdownMenuItem
-                            className="text-destructive focus:text-destructive cursor-pointer"
-                            onClick={() => deleteCourse(course.id)}
-                          >
-                            <Trash2 className="mr-2 h-4 w-4" /> Eliminar
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </TableCell>
-                  </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
-        </div>
-      </div>
+                          </Button>
+                          <Button variant="ghost" size="icon" title="Eliminar">
+                            <Trash2 className="h-4 w-4 text-destructive" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
