@@ -56,7 +56,7 @@ export default function AsistenciaPage() {
         <div>
           <div className="flex items-center gap-2 mb-1">
             <Button variant="ghost" size="icon" asChild className="h-8 w-8">
-              <Link href="/dashboard/talleres">
+              <Link href="/dashboard/actividades">
                 <ChevronLeft className="h-4 w-4" />
               </Link>
             </Button>
