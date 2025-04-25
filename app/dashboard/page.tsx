@@ -110,35 +110,73 @@ export default async function Dashboard() {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {/* {courses.slice(0, 5).map((course) => (
-                <div
-                  key={course.id}
-                  className="flex items-center justify-between border-b border-border pb-4"
-                >
-                  <div>
-                    <h3 className="font-medium">{course.title}</h3>
-                    <p className="text-sm text-muted-foreground">
-                      {course.type === "taller"
-                        ? "Taller"
-                        : course.type === "curso"
-                        ? "Curso"
-                        : "Charla"}{" "}
-                      • {course.instructor}
-                    </p>
+              {[
+                {
+                  id: 1,
+                  title: "Curso de React",
+                  type: "curso",
+                  instructor: "Wilberk Ledezma",
+                  status: "active",
+                },
+                {
+                  id: 2,
+                  title: "Taller de JavaScript",
+                  type: "taller",
+                  instructor: "Ana Pérez",
+                  status: "active",
+                },
+                {
+                  id: 3,
+                  title: "Charla sobre IA",
+                  type: "charla",
+                  instructor: "Luis Gómez",
+                  status: "pending",
+                },
+                {
+                  id: 4,
+                  title: "Curso de Python",
+                  type: "curso",
+                  instructor: "María López",
+                  status: "active",
+                },
+                {
+                  id: 5,
+                  title: "Taller de CSS Avanzado",
+                  type: "taller",
+                  instructor: "Carlos Ruiz",
+                  status: "pending",
+                },
+              ]
+                .slice(0, 5)
+                .map((course) => (
+                  <div
+                    key={course.id}
+                    className="flex items-center justify-between border-b border-border pb-4"
+                  >
+                    <div>
+                      <h3 className="font-medium">{course.title}</h3>
+                      <p className="text-sm text-muted-foreground">
+                        {course.type === "taller"
+                          ? "Taller"
+                          : course.type === "curso"
+                          ? "Curso"
+                          : "Charla"}{" "}
+                        • {course.instructor}
+                      </p>
+                    </div>
+                    <div className="flex items-center">
+                      <span
+                        className={`badge ${
+                          course.status === "active"
+                            ? "badge-success"
+                            : "badge-warning"
+                        }`}
+                      >
+                        {course.status === "active" ? "Activo" : "Pendiente"}
+                      </span>
+                    </div>
                   </div>
-                  <div className="flex items-center">
-                    <span
-                      className={`badge ${
-                        course.status === "active"
-                          ? "badge-success"
-                          : "badge-warning"
-                      }`}
-                    >
-                      {course.status === "active" ? "Activo" : "Pendiente"}
-                    </span>
-                  </div>
-                </div>
-              ))} */}
+                ))}
             </div>
             <div className="mt-4 text-center">
               <Button variant="outline" asChild size="sm">
